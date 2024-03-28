@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Feature Extraction and AR Demo</title>
+    <!-- Include tracking.js and ar.js libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tracking.js/1.1.3/tracking-min.js"></script>
+    <script src="https://rawgit.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+</head>
+
+<body>
+    <h1>Image Feature Extraction and AR Demo</h1>
+
+    <!-- Image Processing Section -->
+    <h2>Image Processing</h2>
+    <!-- Colored images for testing -->
+    <div>
+        <h3>Image 1</h3>
+        <img src="../examples/image1/IMG_1791.jpg" id="image1">
+    </div>
+    <div>
+        <h3>Image 2</h3>
+        <img src="../examples/image1/kanekipic1.jpg" id="image2">
+    </div>
+    <div>
+        <h3>Image 3</h3>
+        <img src="../examples/image1/onepiecepic1.jpg" id="image3">
+    </div>
+
+    <script>
+        // Image processing using tracking.js
+        // Example: displaying feature points
+        const images = ['image1', 'image2', 'image3'];
+
+        images.forEach(imageId => {
+            const imgElement = document.getElementById(imageId);
+            tracking.track(imgElement, new tracking.ObjectTracker('face'));
+
+            tracking.track(imgElement, new tracking.ColorTracker(['magenta', 'cyan', 'yellow']));
+
+            tracking.track(imgElement, new tracking.ColorTracker('magenta'));
+            tracking.track(imgElement, new tracking.ColorTracker('cyan'));
+            tracking.track(imgElement, new tracking.ColorTracker('yellow'));
+
+            tracking.track(imgElement, new tracking.FaceTracking());
+
+            tracking.track(imgElement, new tracking.ObjectTracker('eye'));
+            tracking.track(imgElement, new tracking.ObjectTracker('mouth'));
+        });
+    </script>
+
+    <!-- AR Section -->
+    <h2>Augmented Reality</h2>
+    <!-- AR Scene -->
+    <a-scene embedded arjs="sourceType: webcam; trackingMethod: best;">
+        <!-- Define marker with the desired 3D object -->
+        <a-nft type="nft" url="marker.patt" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5">
+            <!-- Load 3D object to overlay on the marker -->
+            <a-entity gltf-model="3dobject.gltf" scale="0.5 0.5 0.5" position="0 0 0">
+            </a-entity>
+        </a-nft>
+        <!-- Camera and scene light -->
+        <a-entity camera></a-entity>
+        <a-light type="ambient" intensity="0.5" color="#ffffff">
+        </a-light>
+    </a-scene>
+</body>
+
+</html>
