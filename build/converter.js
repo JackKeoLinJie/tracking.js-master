@@ -23,7 +23,6 @@ fileInput.addEventListener('change', e => {
 }, false);
 
 srcImg.onload = function() {
-
     grayScaleBtn.addEventListener('click', e => {
         let src = cv.imread(srcImg);
         const dst = convertImageToGray(src);
